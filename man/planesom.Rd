@@ -3,32 +3,12 @@
 \docType{class}
 \name{planesom}
 \alias{planesom}
-\title{Initialize plane formed SOM}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
+\title{R6 generator object of plane formed SOM}
+\format{An \code{R6Class} generator object.}
 \usage{
 planesom
 }
-\arguments{
-\item{dim}{dimension of the input data}
-
-\item{r}{length of forms}
-
-\item{c}{height of forms}
-
-\item{weights}{initial weights}
-
-\item{neighbor}{size of the neighborhood kernel}
-
-\item{alpha}{learning late}
-
-\item{sigma}{variance of the weights propagation}
-
-\item{collect.stats}{whether to save learning history}
-}
-\value{
-SOM object
-}
 \description{
-Initialize plane formed SOM
+usage: \code{planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)}
 }
 \keyword{datasets}

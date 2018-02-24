@@ -1,11 +1,16 @@
 #' create panel formed som
 #' @export
-#' @usage planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)
 #' @param dim dimension of input vector
 #' @param r row of panel topology
 #' @param c column of panel topology
 setPanelSom <- function(dim,r,c) planesom$new(dim,r,c)
 
+#' R6 generator object of plane formed SOM
+#'
+#' \code{planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)}
+#' @docType class
+#' @export
+#' @format An \code{R6Class} generator object.
 planesom <- R6Class(
   classname = "planesom",
   inherit = "tpsom",
@@ -14,20 +19,6 @@ planesom <- R6Class(
     tprow = 4,
     tpcol = 8,
 
-#' Initialize plane formed SOM
-#'
-#' @docType class
-#' @param dim dimension of the input data
-#' @param r length of forms
-#' @param c height of forms
-#' @param weights initial weights
-#' @param neighbor size of the neighborhood kernel
-#' @param alpha learning late
-#' @param sigma variance of the weights propagation
-#' @param collect.stats whether to save learning history
-#'
-#' @return SOM object
-#' @export
     initialize = function(dim, r = self$tprow, c = self$tpcol, weights = NULL,
                           neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
       self$setTopology((planeTopology(r,c)))

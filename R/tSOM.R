@@ -3,7 +3,7 @@
 #' @docType class
 #' @importFrom R6 R6Class
 #' @export
-#' @format An R6Class generator object.
+#' @format An \code{R6Class} generator object.
 tpsom <-
   R6Class(
     classname = "tpsom", inherit = tpgrp,

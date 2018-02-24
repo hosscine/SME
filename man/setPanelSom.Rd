@@ -4,7 +4,7 @@
 \alias{setPanelSom}
 \title{create panel formed som}
 \usage{
-planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)
+setPanelSom(dim, r, c)
 }
 \arguments{
 \item{dim}{dimension of input vector}

@@ -4,7 +4,7 @@
 \name{tpsom}
 \alias{tpsom}
 \title{topological SOM}
-\format{An R6Class generator object.}
+\format{An \code{R6Class} generator object.}
 \usage{
 tpsom
 }
