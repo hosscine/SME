@@ -53,11 +53,19 @@ planesom <- R6Class(
 
 #' create a type of som
 #' @export
+#'
 #' @param dim Dimension of input vector.
+#' @param weights initialize weights.
+#' @param neighbor size of the neighborhood kernel.
+#' @param alpha learning rate.
+#' @param sigma variance of the weights propagation.
+#' @param collect.stats whether rocords learning history.
 #' @param topo.mode Id of typical som topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).
+#'
 #' @return Som objsect.
 #' @examples spsom <- setSom(3,"sphere")
-setSom <- function(dim, topo.mode){
+setSom <- function(dim, topo.mode, weights = NULL,
+                   neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
   if(topo.mode == "grid")
     topo <- list(c(2,7,6),c(1,7,3),c(2,7,8,9,4),c(3,9,5),c(4,9,10),c(1,7,12,11),
                  c(1,2,3,8,12,6),c(3,9,14,13,12,7),c(3,4,5,10,14,8),c(5,9,14,15),

@@ -9,6 +9,6 @@
 planesom
 }
 \description{
-usage: \code{planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)}
+\code{planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)}
 }
 \keyword{datasets}
