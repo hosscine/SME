@@ -9,13 +9,6 @@ tpsom <-
     classname = "tpsom", inherit = tpgrp,
     public = list(
       # Public Fields ----------------------------------------------------------
-      # nnodes = "numeric",
-      # topology = "list",
-      # adjacency = "matrix",
-      # hop = "matrix",
-      #
-      # dim = "numeric",
-      # weights = "matrix",
 
       neighbor.hop = 1,
       alpha = 0.1,
@@ -31,7 +24,6 @@ tpsom <-
 
         self$dim <- dim
         if(!missing(weights)) self$weights <- weights
-        # else self$weights <- matrix(runif(nnodes*dim),nnodes,dim)
         else self$weights <- matrix(0,self$nnodes,dim)
 
         self$neighbor.hop <- neighbor
