@@ -54,7 +54,7 @@ tpsom <-
                    function(n) self$hci(win,n) * vnorm(x-self$weights[n,]))),
 
       step = function(x){
-        self$steps <- steps + 1
+        self$steps <- self$steps + 1
         winner <- self$calcWinner(x)
         self$collectStats(x,winner)
         self$updateWeights(x,winner)
@@ -62,6 +62,6 @@ tpsom <-
       },
 
       batchStep = function(X,t=1000)
-        hoge <- apply(X[round(runif(t)*nrow(X)),],1,function(x)step(x))
+        hoge <- apply(X[round(runif(t)*nrow(X)),],1,function(x)self$step(x))
     )
   )
