@@ -1,7 +1,7 @@
 Package: SME
-Title: Self-manifolding embedding
-Version: 1.1.0
-Authors@R: person("Rentaro", "Futagami", email = "futagami@fz.iit.tsukuba.ac.jp", role = c("aut", "cre"))
+Title: Self-Manifolding Embedding
+Version: 1.2.0
+Authors@R: person("Rentaro", "Futagami", email = "futagamirentaro@gmail.com", role = c("aut", "cre"))
 Description: Including a self-organizing maps for non isometric data,
     and SME that is one of the dimensionality reduction methods,
     which uses manifolds information created by SOM.
