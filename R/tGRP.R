@@ -1,4 +1,6 @@
-#' topological graph
+#' R6 generator object of topological graph.
+#'
+#' \code{tpgrp$new(topology, dim = NULL, weights = NULL)}
 #'
 #' @docType class
 #' @importFrom R6 R6Class
@@ -11,16 +13,29 @@ tpgrp <-
     public = list(
       # Public Fields ----------------------------------------------------------
       nnodes = 20,
-      adjacency = "matrix",
+      adjacency = NULL,
       hop = "matrix",
 
       dim = "numeric",
       weights = "matrix",
 
       # Public Methods ----------------------------------------------------------
-      initialize = function(topology,dim=NULL){
-        self$setTopology(topology)
+      initialize = function(topology,dim=NULL,weights=NULL){
+        if(missing(topology) && is.null(self$adjacency))
+          stop("to instancing the class, you must specify a topology.")
 
+        if(!missing(topology))
+          self$setTopology(topology)
+
+        if(!is.null(dim))
+          self$embedGraph(dim)
+
+        if(!is.null(weights))
+          self$weights <- weights
+      },
+
+      embedGraph = function(dim){
+        # sets dimension
         if(is.null(dim)){
           self$dim <- min(sapply(1:self$nnodes,function(n)length(self$calcNeighbor(n))))-1
           message(paste("embedding dimension is automatically setted as",self$dim))
@@ -32,6 +47,8 @@ tpgrp <-
       },
 
       setTopology = function(topology){
+
+        # calculates adjacency matrix
         if(class(topology)=="list"){
           self$nnodes <- length(topology)
           self$adjacency <- sapply(1:self$nnodes,function(n){
@@ -45,6 +62,7 @@ tpgrp <-
           self$adjacency <- topology
         }
 
+        # calculates number of the hops matrix
         self$hop <- sapply(1:self$nnodes,function(center){
           h <- numeric(self$nnodes)
           i <- 1
@@ -58,6 +76,7 @@ tpgrp <-
           h[center] <- 0
           h
         })
+
       },
 
       calcWinner = function(x){
