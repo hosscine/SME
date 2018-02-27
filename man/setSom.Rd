@@ -4,8 +4,8 @@
 \alias{setSom}
 \title{create a type of som}
 \usage{
-setSom(dim, topo.mode, weights = NULL, neighbor = 1, alpha = 0.1,
-  sigma = 1, collect.stats = F)
+setSom(dim, topo.mode, weights = NULL, alpha = 0.1, sigma = 1,
+  collect.stats = F)
 }
 \arguments{
 \item{dim}{Dimension of input vector.}
@@ -13,8 +13,6 @@ setSom(dim, topo.mode, weights = NULL, neighbor = 1, alpha = 0.1,
 \item{topo.mode}{Id of typical som topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).}
 
 \item{weights}{initialize weights.}
-
-\item{neighbor}{size of the neighborhood kernel.}
 
 \item{alpha}{learning rate.}
 

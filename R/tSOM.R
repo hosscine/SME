@@ -23,7 +23,7 @@ tpsom <-
         self$setTopology(topology)
 
         self$dim <- dim
-        if(!missing(weights)) self$weights <- weights
+        if(!is.null(weights)) self$weights <- weights
         else self$weights <- matrix(0,self$nnodes,dim)
 
         self$neighbor.hop <- neighbor
@@ -40,7 +40,7 @@ tpsom <-
       hci = function(c, i) self$alpha*exp(-self$calcHop(c,i)/2/self$sigma^2),
 
       collectStats = function(x, win){
-        if(!self$collect.stats)
+        if(self$collect.stats)
           self$stats <- append(self$stats,list(c(step=self$steps,
                                                  input=x,
                                                  win=win,

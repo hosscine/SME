@@ -3,12 +3,12 @@
 \docType{class}
 \name{tpgrp}
 \alias{tpgrp}
-\title{topological graph}
+\title{R6 generator object of topological graph.}
 \format{An R6class generator object.}
 \usage{
 tpgrp
 }
 \description{
-topological graph
+\code{tpgrp$new(topology, dim = NULL, weights = NULL)}
 }
 \keyword{datasets}

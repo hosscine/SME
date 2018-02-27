@@ -17,7 +17,7 @@ tpgrp <-
       hop = "matrix",
 
       dim = "numeric",
-      weights = "matrix",
+      weights = NULL,
 
       # Public Methods ----------------------------------------------------------
       initialize = function(topology,dim=NULL,weights=NULL){
@@ -27,7 +27,7 @@ tpgrp <-
         if(!missing(topology))
           self$setTopology(topology)
 
-        if(!is.null(dim))
+        if(!is.null(dim) || is.null(weights))
           self$embedGraph(dim)
 
         if(!is.null(weights))
@@ -87,7 +87,16 @@ tpgrp <-
 
       calcNeighbor = function(node, neighbor.hop=1) which(self$hop[node,] <= neighbor.hop),
 
-      calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)]
+      calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)],
+
+      plot = function(...){
+        args <- list(...)
+        if(is.null(args$xlab)) args$xlab <- ""
+        if(is.null(args$ylab)) args$ylab <- ""
+        args$x <- self$weights
+
+        do.call(plot,args)
+      }
     ),
     private = list(
       rowNorm = function(X) sqrt(rowSums(X^2)),
