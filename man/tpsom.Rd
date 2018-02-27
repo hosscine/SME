@@ -3,12 +3,12 @@
 \docType{class}
 \name{tpsom}
 \alias{tpsom}
-\title{topological SOM}
+\title{R6 generator object of topological SOM.}
 \format{An \code{R6Class} generator object.}
 \usage{
 tpsom
 }
 \description{
-topological SOM
+\code{tpsom$new(dim, topology, weights = NULL, neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F)}
 }
 \keyword{datasets}

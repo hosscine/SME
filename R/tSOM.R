@@ -1,4 +1,6 @@
-#' topological SOM
+#' R6 generator object of topological SOM.
+#'
+#' \code{tpsom$new(dim, topology, weights = NULL, neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F)}
 #'
 #' @docType class
 #' @importFrom R6 R6Class
@@ -13,24 +15,36 @@ tpsom <-
       neighbor.hop = 1,
       alpha = 0.1,
       sigma = 1,
-      steps = 0,
-      stats = list(),
       collect.stats = F,
 
-      # Public Methods ----------------------------------------------------------
-      initialize = function(dim, topology, weights = NULL,
-                            neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
-        self$setTopology(topology)
+      steps = 0,
+      stats = list(),
 
-        self$dim <- dim
-        if(!is.null(weights)) self$weights <- weights
+      weights.init = NULL,
+
+      # Public Methods ----------------------------------------------------------
+      initialize = function(dim, topology, weights=NULL,
+                            neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
+        # check args
+        if(missing(topology) && is.null(self$adjacency))
+          stop("to instancing the class, you must specify a topology.")
+        if(missing(dim) && is.null(self$dim))
+          stop("to instancing the class, you must specify a dimension.")
+
+        # instancing process
+        if(!missing(topology)) self$setTopology(topology)
+        if(!missing(dim)) self$dim <- dim
+        if(!missing(neighbor)) self$neighbor.hop <- neighbor
+        if(!missing(alpha)) self$alpha <- 0.1
+        if(!missing(sigma)) self$sigma <- 1
+        if(!missing(collect.stats)) self$collect.stats <- collect.stats
+        if(!missing(weights)) self$weights.init <- weights
+
+        self$steps <- 0
+        self$stats <- list()
+        if(!is.null(self$weights.init)) self$weights <- self$weights.init
         else self$weights <- matrix(0,self$nnodes,dim)
 
-        self$neighbor.hop <- neighbor
-        self$alpha <- 0.1
-        self$sigma <- 1
-        self$steps <- 0
-        self$collect.stats <- collect.stats
       },
 
       updateWeights = function(x, win)
