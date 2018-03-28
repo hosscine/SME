@@ -2,7 +2,9 @@
 #'
 #' \code{tpsom$new(dim, topology, weights = NULL, neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F)}
 #'
-#' @importFrom R6 R6Class
+#' @importFrom stats prcomp
+#' @importFrom rgl points3d
+#' @importFrom rgl segments3d
 #'
 #' @export
 #' @docType class
@@ -13,7 +15,6 @@ tpsom <-
     classname = "tpsom", inherit = tpgrp,
     public = list(
       # Public Fields ----------------------------------------------------------
-
       neighbor.hop = 1,
       alpha = 0.1,
       sigma = 1,
@@ -63,6 +64,42 @@ tpsom <-
                                                  error=vnorm(x-self$weights[win,]),
                                                  distortion=self$calcDistortion(x,win)
           )))
+      },
+
+      plot = function(X, ...){
+        if(missing(X)){
+          super$plot(...)
+          cat("plot by graph mode.\nif you want to plot by data mode, add argment X.")
+        }
+
+        if(self$dim == 2){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = NULL)
+          do.call(plot,elp)
+          points(self$weights, ...)
+        }
+        else if(self$dim == 3){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
+                                   x = X, col = NULL, size = 5)
+          do.call(plot3d,elp)
+          points3d(self$weights, ...)
+        }
+        else{
+          pca <- prcomp(rbind(X, self$weights))[[5]]
+
+          # plot X
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
+                                   x = pca[1:nrow(X),], size = 5,
+                                   col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
+          do.call(plot3d, elp)
+
+          # plot SOM
+          rgl::points3d(pca[(nrow(X)+1):nrow(pca),], size = 3)
+          for(i in 1:self$nnodes){
+            nei <- self$calcNeighbor(i, neighbor.hop = 1)
+            rgl::segments3d(x = pca[replace(rep(i, 2 * length(nei)), 2 * 1:length(nei), nei) + nrow(X),])
+          }
+          rgl::text3d(pca[(nrow(X) + 1):nrow(pca),], texts = 1:self$nnodes, adj = 1)
+        }
       },
 
       calcDistortion = function(x, win)

@@ -4,7 +4,10 @@
 #'
 #' @importFrom R6 R6Class
 #' @importFrom magrittr %>%
+#' @importFrom rgl plot3d
 #' @importFrom myfs overwriteEllipsis
+#' @importFrom myfs rowNorm
+#' @importFrom myfs rowMinus
 #'
 #' @export
 #' @docType class
@@ -85,7 +88,7 @@ tpgrp <-
       calcWinner = function(x){
         if(!(class(x) %in% c("numeric","integer"))) stop("x must be numeric vector")
         if(length(x) != self$dim) stop("unmached dim and length of x")
-        which.min(private$rowNorm(private$rowMinus(self$weights,x)))
+        which.min(rowNorm(rowMinus(self$weights,x)))
       },
 
       calcNeighbor = function(node, neighbor.hop=1) which(self$hop[node,] <= neighbor.hop),
@@ -93,12 +96,18 @@ tpgrp <-
       calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)],
 
       plot = function(...){
-        elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights)
-        do.call(plot,elp)
+        if(self$dim == 2){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights)
+          do.call(plot,elp)
+        }
+        else if(self$dim == 3){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = self$weights)
+          do.call(plot3d,elp)
+        }
+        else{
+          grp <- igraph::graph.adjacency(self$adjacency)
+          plot(grp, ...)
+        }
       }
-    ),
-    private = list(
-      rowNorm = function(X) sqrt(rowSums(X^2)),
-      rowMinus = function(X,a) t(t(X)-a)
     )
   )
