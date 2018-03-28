@@ -1,16 +1,21 @@
-#' create panel formed som
+#' Creates panel formed SOM.
+#'
+#' @param dim dimension of input vector.
+#' @param r row of panel topology.
+#' @param c column of panel topology.
+#'
 #' @export
-#' @param dim dimension of input vector
-#' @param r row of panel topology
-#' @param c column of panel topology
+#'
 setPanelSom <- function(dim,r,c) planesom$new(dim,r,c)
 
-#' R6 generator object of plane formed SOM
+#' R6 generator object of plane formed SOM.
 #'
 #' \code{planesom$new(dim, r, c, weights = NULL, alpha = 0.1, sigma = 1, collect.stats = F)}
-#' @docType class
+#'
 #' @export
+#' @docType class
 #' @format An \code{R6Class} generator object.
+#'
 planesom <- R6Class(
   classname = "planesom",
   inherit = "tpsom",
@@ -51,18 +56,20 @@ planesom <- R6Class(
     }
   ))
 
-#' create a type of som
-#' @export
+#' Creates a type of SOM.
 #'
-#' @param dim Dimension of input vector.
+#' @param dim dimension of input vector.
 #' @param weights initialize weights.
 #' @param alpha learning rate.
 #' @param sigma variance of the weights propagation.
 #' @param collect.stats whether rocords learning history.
-#' @param topo.mode Id of typical som topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).
+#' @param topo.mode type of SOM topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).
 #'
-#' @return Som objsect.
+#' @return SOM objsect.
+#' @export
+#'
 #' @examples spsom <- setSom(3,"sphere")
+#'
 setSom <- function(dim, topo.mode, weights = NULL,
                    alpha = 0.1, sigma = 1, collect.stats = F){
   if(topo.mode == "grid")
@@ -104,8 +111,11 @@ setSom <- function(dim, topo.mode, weights = NULL,
   return(som)
 }
 
-#' create graph of manifold from som
-#' @export
-#' @param som Corresponding som.
+#' Create graph of manifold from SOM.
+#'
+#' @param som corresponding SOM.
 #' @param dim embedding dimension.
+#'
+#' @export
+#'
 setGraph <- function(som,dim=NULL) tpgrp$new(som$adjacency,dim)

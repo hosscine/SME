@@ -2,15 +2,15 @@
 % Please edit documentation in R/unique_SOM.R
 \name{setSom}
 \alias{setSom}
-\title{create a type of som}
+\title{Creates a type of SOM.}
 \usage{
 setSom(dim, topo.mode, weights = NULL, alpha = 0.1, sigma = 1,
   collect.stats = F)
 }
 \arguments{
-\item{dim}{Dimension of input vector.}
+\item{dim}{dimension of input vector.}
 
-\item{topo.mode}{Id of typical som topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).}
+\item{topo.mode}{type of SOM topology. Choose from c(grid, plane, circle, sphere, torus, cylinder, cylinder.twocircle).}
 
 \item{weights}{initialize weights.}
 
@@ -21,11 +21,12 @@ setSom(dim, topo.mode, weights = NULL, alpha = 0.1, sigma = 1,
 \item{collect.stats}{whether rocords learning history.}
 }
 \value{
-Som objsect.
+SOM objsect.
 }
 \description{
-create a type of som
+Creates a type of SOM.
 }
 \examples{
 spsom <- setSom(3,"sphere")
+
 }

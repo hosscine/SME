@@ -12,5 +12,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: R6,
     igraph,
-    pipeR
+    magrittr,
+    myfs
+Remotes: hosscine/myfs
 Suggests: TDA

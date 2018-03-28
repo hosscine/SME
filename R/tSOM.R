@@ -2,10 +2,12 @@
 #'
 #' \code{tpsom$new(dim, topology, weights = NULL, neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F)}
 #'
-#' @docType class
 #' @importFrom R6 R6Class
+#'
 #' @export
+#' @docType class
 #' @format An \code{R6Class} generator object.
+#'
 tpsom <-
   R6Class(
     classname = "tpsom", inherit = tpgrp,

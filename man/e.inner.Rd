@@ -2,15 +2,15 @@
 % Please edit documentation in R/SEM_algorithm.R
 \name{e.inner}
 \alias{e.inner}
-\title{calculate shift vector on manifold origin}
+\title{Calculates shift vector on manifold origin.}
 \usage{
 e.inner(n, grp)
 }
 \arguments{
-\item{n}{Numeric of origin.}
+\item{n}{numeric of origin.}
 
-\item{grp}{Graph of manifold.}
+\item{grp}{graph of manifold.}
 }
 \description{
-calculate shift vector on manifold origin
+Calculates shift vector on manifold origin.
 }

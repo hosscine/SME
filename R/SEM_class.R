@@ -6,6 +6,7 @@
 #'
 #' @docType class
 #' @export
+#'
 semR6 <- R6::R6Class(
   classname = "sem",
 

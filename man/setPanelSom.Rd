@@ -2,17 +2,17 @@
 % Please edit documentation in R/unique_SOM.R
 \name{setPanelSom}
 \alias{setPanelSom}
-\title{create panel formed som}
+\title{Creates panel formed SOM.}
 \usage{
 setPanelSom(dim, r, c)
 }
 \arguments{
-\item{dim}{dimension of input vector}
+\item{dim}{dimension of input vector.}
 
-\item{r}{row of panel topology}
+\item{r}{row of panel topology.}
 
-\item{c}{column of panel topology}
+\item{c}{column of panel topology.}
 }
 \description{
-create panel formed som
+Creates panel formed SOM.
 }

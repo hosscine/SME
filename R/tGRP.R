@@ -2,11 +2,14 @@
 #'
 #' \code{tpgrp$new(topology, dim = NULL, weights = NULL)}
 #'
-#' @docType class
 #' @importFrom R6 R6Class
-#' @importFrom pipeR %>>%
+#' @importFrom magrittr %>%
+#' @importFrom myfs overwriteEllipsis
+#'
 #' @export
+#' @docType class
 #' @format An R6class generator object.
+#'
 tpgrp <-
   R6::R6Class(
     classname = "tpgraph",
@@ -42,7 +45,7 @@ tpgrp <-
         }
         else self$dim <- dim
 
-        self$weights <- igraph::graph.adjacency(self$adjacency) %>>%
+        self$weights <- igraph::graph.adjacency(self$adjacency) %>%
           igraph::layout_with_kk(dim = self$dim)
       },
 
@@ -90,12 +93,8 @@ tpgrp <-
       calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)],
 
       plot = function(...){
-        args <- list(...)
-        if(is.null(args$xlab)) args$xlab <- ""
-        if(is.null(args$ylab)) args$ylab <- ""
-        args$x <- self$weights
-
-        do.call(plot,args)
+        elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights)
+        do.call(plot,elp)
       }
     ),
     private = list(

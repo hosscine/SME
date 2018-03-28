@@ -2,22 +2,22 @@
 % Please edit documentation in R/SEM_algorithm.R
 \name{sem}
 \alias{sem}
-\title{calculate self-embedding model}
+\title{Calculates self-embedding model.}
 \usage{
 sem(X, som, grp)
 }
 \arguments{
-\item{X}{A matrix of data.}
+\item{X}{a matrix of data.}
 
-\item{som}{A SOM learned X.}
+\item{som}{a SOM learned X.}
 
-\item{grp}{Graph of manifold equal to som topology.}
+\item{grp}{graph of manifold equal to SOM topology.}
 }
 \value{
-SMM object
+SME object.
 }
 \description{
-calculate self-embedding model
+Calculates self-embedding model.
 }
 \examples{
 library(TDA)

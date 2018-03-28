@@ -1,13 +1,17 @@
 
-#' calculate coordinates on manifold
-#' @param X Matrix of high dimensional vectors.
-#' @param A Origin of manifold axis.
-#' @param V Direction of manifold axis.
+#' Calculates coordinates on manifold.
+#'
+#' @param X matrix of high dimensional vectors.
+#' @param A origin of manifold axis.
+#' @param V direction of manifold axis.
+#'
 p <- function(X,A,V) rowSums((X-A) * V) / rowSums(V^2)
 
-#' calculate shift vector on manifold origin
-#' @param n Numeric of origin.
-#' @param grp Graph of manifold.
+#' Calculates shift vector on manifold origin.
+#'
+#' @param n numeric of origin.
+#' @param grp graph of manifold.
+#'
 e.inner <- function(n,grp){
   if(inherits(grp,"tpgraph"))
     i <- apply(grp$weights[grp$calcNeighbor(n,neighbor.hop=1),],2,mean) - grp$weights[n,]
@@ -15,13 +19,18 @@ e.inner <- function(n,grp){
   i/vnorm(i)
 }
 
-#' calculate self-embedding model
+#' Calculates self-embedding model.
+#'
+#' @param X a matrix of data.
+#' @param som a SOM learned X.
+#' @param grp graph of manifold equal to SOM topology.
+#'
+#' @importFrom myfs matlist
+#' @importFrom myfs vnorm
+#'
+#' @return SME object.
 #' @export
-#' @param X A matrix of data.
-#' @param som A SOM learned X.
-#' @param grp Graph of manifold equal to som topology.
-#' @return SMM object
-#' @import pipeR
+#'
 #' @examples library(TDA)
 #'
 #' sphere4d <- sphereUnif(n = 500,d = 3)
@@ -86,29 +95,3 @@ sem <- function(X,som,grp){
             som = som, grp = grp)
 }
 
-
-#' Deforms listed list (a list nested by list) as matrix
-#'
-#' @param lst listed list.
-#' @param nrow nrow of returned matrix.
-#' @param ncol ncol of returned matrix.
-#' @param rname rownames of returned matrix.
-#' @param cname colnames of returned matrix.
-#'
-#' @return matrix deformed from listed list.
-matlist = function(lst,nrow=length(lst),ncol=length(lst[[nrow]]),
-                   rname=names(lst),cname=names(lst[[nrow]])){
-  if (length(lst)==0) stop("input list is empty")
-  lst <- lapply(lst,function(l){length(l)<-ncol;l})
-  mat <- matrix(unlist(lst), nrow, ncol,byrow = T)
-  rownames(mat) <- rname
-  colnames(mat) <- cname
-  return(mat)
-}
-
-#' calculates vector's norm
-#'
-#' @param x input vector.
-#'
-#' @return norm of \code{x}.
-vnorm <- function(x) sqrt(sum(x^2))

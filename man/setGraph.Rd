@@ -2,15 +2,15 @@
 % Please edit documentation in R/unique_SOM.R
 \name{setGraph}
 \alias{setGraph}
-\title{create graph of manifold from som}
+\title{Create graph of manifold from SOM.}
 \usage{
 setGraph(som, dim = NULL)
 }
 \arguments{
-\item{som}{Corresponding som.}
+\item{som}{corresponding SOM.}
 
 \item{dim}{embedding dimension.}
 }
 \description{
-create graph of manifold from som
+Create graph of manifold from SOM.
 }

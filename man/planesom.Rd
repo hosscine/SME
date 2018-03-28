@@ -3,7 +3,7 @@
 \docType{class}
 \name{planesom}
 \alias{planesom}
-\title{R6 generator object of plane formed SOM}
+\title{R6 generator object of plane formed SOM.}
 \format{An \code{R6Class} generator object.}
 \usage{
 planesom

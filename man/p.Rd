@@ -2,17 +2,17 @@
 % Please edit documentation in R/SEM_algorithm.R
 \name{p}
 \alias{p}
-\title{calculate coordinates on manifold}
+\title{Calculates coordinates on manifold.}
 \usage{
 p(X, A, V)
 }
 \arguments{
-\item{X}{Matrix of high dimensional vectors.}
+\item{X}{matrix of high dimensional vectors.}
 
-\item{A}{Origin of manifold axis.}
+\item{A}{origin of manifold axis.}
 
-\item{V}{Direction of manifold axis.}
+\item{V}{direction of manifold axis.}
 }
 \description{
-calculate coordinates on manifold
+Calculates coordinates on manifold.
 }
