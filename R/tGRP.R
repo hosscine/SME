@@ -95,12 +95,12 @@ tpgrp <-
 
       calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)],
 
-      plot = function(...){
-        if(self$dim == 2){
+      plot = function(..., as.grp = F){
+        if(self$dim == 2 && !as.grp){
           elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights)
           do.call(plot,elp)
         }
-        else if(self$dim == 3){
+        else if(self$dim == 3 && !as.grp){
           elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = self$weights)
           do.call(plot3d,elp)
         }

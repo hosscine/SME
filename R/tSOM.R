@@ -66,39 +66,41 @@ tpsom <-
           )))
       },
 
-      plot = function(X, ...){
-        if(missing(X)){
-          super$plot(...)
-          cat("plot by graph mode.\nif you want to plot by data mode, add argment X.")
+      plot = function(X, ..., as.grp = F){
+        if(missing(X) || as.grp){
+          super$plot(..., as.grp = T)
+          cat("plot by graph mode.\n
+              if you want to plot by data mode, add argment X and set as.grp = F.")
         }
-
-        if(self$dim == 2){
-          elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = NULL)
-          do.call(plot,elp)
-          points(self$weights, ...)
-        }
-        else if(self$dim == 3){
-          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
-                                   x = X, col = NULL, size = 5)
-          do.call(plot3d,elp)
-          points3d(self$weights, ...)
-        }
-        else{
-          pca <- prcomp(rbind(X, self$weights))[[5]]
-
-          # plot X
-          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
-                                   x = pca[1:nrow(X),], size = 5,
-                                   col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
-          do.call(plot3d, elp)
-
-          # plot SOM
-          rgl::points3d(pca[(nrow(X)+1):nrow(pca),], size = 3)
-          for(i in 1:self$nnodes){
-            nei <- self$calcNeighbor(i, neighbor.hop = 1)
-            rgl::segments3d(x = pca[replace(rep(i, 2 * length(nei)), 2 * 1:length(nei), nei) + nrow(X),])
+        else {
+          if(self$dim == 2){
+            elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = 1)
+            do.call(plot,elp)
+            points(self$weights, ...)
           }
-          rgl::text3d(pca[(nrow(X) + 1):nrow(pca),], texts = 1:self$nnodes, adj = 1)
+          else if(self$dim == 3){
+            elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
+                                     x = X, col = 1, size = 5)
+            do.call(plot3d,elp)
+            points3d(self$weights, ...)
+          }
+          else{
+            pca <- prcomp(rbind(X, self$weights))[[5]]
+
+            # plot X
+            elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
+                                     x = pca[1:nrow(X),], size = 5,
+                                     col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
+            do.call(plot3d, elp)
+
+            # plot SOM
+            rgl::points3d(pca[(nrow(X)+1):nrow(pca),], size = 3)
+            for(i in 1:self$nnodes){
+              nei <- self$calcNeighbor(i, neighbor.hop = 1)
+              rgl::segments3d(x = pca[replace(rep(i, 2 * length(nei)), 2 * 1:length(nei), nei) + nrow(X),])
+            }
+            rgl::text3d(pca[(nrow(X) + 1):nrow(pca),], texts = 1:self$nnodes, adj = 1)
+          }
         }
       },
 
