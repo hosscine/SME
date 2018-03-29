@@ -26,13 +26,13 @@ tpsom <-
       weights.init = NULL,
 
       # Public Methods ----------------------------------------------------------
-      initialize = function(dim, topology, weights=NULL,
+      initialize = function(dim, topology, skip.topology = F, weights=NULL,
                             neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
         # check args
-        if(missing(topology) && is.null(self$adjacency))
+        if(missing(topology) && is.null(self$adjacency) && !skip.topology)
           stop("to instancing the class, you must specify a topology.")
         if(missing(dim) && is.null(self$dim))
-          stop("to instancing the class, you must specify a dimension.")
+          stop("to instancing the class, you must specify the dimension of the learning data.")
 
         # instancing process
         if(!missing(topology)) self$setTopology(topology)
@@ -43,11 +43,11 @@ tpsom <-
         if(!missing(collect.stats)) self$collect.stats <- collect.stats
         if(!missing(weights)) self$weights.init <- weights
 
+        # initializing process
         self$steps <- 0
         self$stats <- list()
         if(!is.null(self$weights.init)) self$weights <- self$weights.init
         else self$weights <- matrix(0,self$nnodes,dim)
-
       },
 
       updateWeights = function(x, win)
@@ -70,8 +70,7 @@ tpsom <-
                       dim = min(sapply(1:self$nnodes,function(n)length(self$calcNeighbor(n))))-1){
         if(missing(X) || as.grp){
           super$plot(..., as.grp = T, dim = dim)
-          cat("plot by graph mode.\n
-              if you want to plot by data mode, add argment X and set as.grp = F.")
+          cat("plot by graph mode.\nif you want to plot by data mode, add argment X and set as.grp = F.")
         }
         else {
           if(self$dim == 2){

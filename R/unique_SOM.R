@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-setPanelSom <- function(dim,r,c) planesom$new(dim,r,c)
+setPanelSom <- function(dim,r,c) panelsom$new(dim,r,c)
 
 #' R6 generator object of plane formed SOM.
 #'
@@ -16,9 +16,9 @@ setPanelSom <- function(dim,r,c) planesom$new(dim,r,c)
 #' @docType class
 #' @format An \code{R6Class} generator object.
 #'
-planesom <- R6Class(
-  classname = "planesom",
-  inherit = "tpsom",
+panelsom <- R6Class(
+  classname = "panelsom",
+  inherit = tpsom,
 
   public = list(
     tprow = 4,
@@ -26,32 +26,34 @@ planesom <- R6Class(
 
     initialize = function(dim, r = self$tprow, c = self$tpcol, weights = NULL,
                           neighbor = 1, alpha = 0.1, sigma = 1, collect.stats = F){
-      self$setTopology((planeTopology(r,c)))
-      self$tprow <- r
-      self$tpcol <- c
 
-      self$dim <- dim
-      if(!missing(weights)) self$weights <- weights
-      # else self$weights <- matrix(runif(nnodes*dim),nnodes,dim)
-      else self$weights <- matrix(0,nnodes,dim)
+      super$initialize(dim = dim, skip.topology = T, weights=weights, neighbor = neighbor,
+                       alpha = alpha, sigma = sigma, collect.stats = collect.stats)
 
-      self$neighbor.hop <- neighbor
-      self$alpha <- 0.1
-      self$sigma <- 1
+      # instancing process
+      if(!missing(r) || !missing(c)){
+        self$setTopology((self$planeTopology(r,c)))
+        self$tprow <- r
+        self$tpcol <- c
+      }
+
+      # initializing process
       self$steps <- 0
-      self$collect.stats <- collect.stats
+      self$stats <- list()
+      if(!is.null(self$weights.init)) self$weights <- self$weights.init
+      else self$weights <- matrix(0,self$nnodes,dim)
     },
 
-    planeTopology = function(r,c){
-      tptmp <- matrix(1:(r*c),r,c)
-      tp <- matrix(0,r+2,c+2)
-      tp[2:(nrow(tp)-1),2:(ncol(tp)-1)] <- tptmp
-      ind <- expand.grid(2:(nrow(tp)-1),2:(ncol(tp)-1))
-      raw <- cbind(tp[rowMinus(ind,c(1,0))],tp[rowMinus(ind,c(-1,0))],
-                   tp[rowMinus(ind,c(0,1))],tp[rowMinus(ind,c(0,-1))])
-      lapply(1:nrow(raw),function(n){
+    planeTopology = function(row, col){
+      tptmp <- matrix(1:(row * col), row, col)
+      tp <- matrix(0, row + 2, col + 2)
+      tp[2:(nrow(tp) - 1), 2:(ncol(tp) - 1)] <- tptmp
+      ind <- expand.grid(2:(nrow(tp) - 1), 2:(ncol(tp) - 1))
+      raw <- cbind(tp[rowMinus(ind, c(1, 0))], tp[rowMinus(ind, c(-1 , 0))],
+                   tp[rowMinus(ind, c(0, 1))], tp[rowMinus(ind, c(0, -1))])
+      lapply(1:nrow(raw), function(n){
         tmp <- raw[n,]
-        tmp[tmp>0]
+        tmp[tmp > 0]
       })
     }
   ))
