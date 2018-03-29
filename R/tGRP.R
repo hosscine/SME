@@ -95,13 +95,17 @@ tpgrp <-
 
       calcHop = function(center,node=1:self$nnodes) self$hop[cbind(center,node)],
 
-      plot = function(..., as.grp = F){
-        if(self$dim == 2 && !as.grp){
-          elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights)
+      plot = function(..., as.grp = F, dim = self$dim){
+        if(as.grp) x <- igraph::graph.adjacency(self$adjacency) %>%
+            igraph::layout_with_kk(dim = dim)
+        else x <- self$weights
+
+        if(dim == 2){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = x)
           do.call(plot,elp)
         }
-        else if(self$dim == 3 && !as.grp){
-          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = self$weights)
+        else if(dim == 3){
+          elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = x)
           do.call(plot3d,elp)
         }
         else{
@@ -109,5 +113,8 @@ tpgrp <-
           plot(grp, ...)
         }
       }
+    ),
+    private = list(
+
     )
   )
