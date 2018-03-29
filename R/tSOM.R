@@ -38,8 +38,8 @@ tpsom <-
         if(!missing(topology)) self$setTopology(topology)
         if(!missing(dim)) self$dim <- dim
         if(!missing(neighbor)) self$neighbor.hop <- neighbor
-        if(!missing(alpha)) self$alpha <- 0.1
-        if(!missing(sigma)) self$sigma <- 1
+        if(!missing(alpha)) self$alpha <- alpha
+        if(!missing(sigma)) self$sigma <- sigma
         if(!missing(collect.stats)) self$collect.stats <- collect.stats
         if(!missing(weights)) self$weights.init <- weights
 
