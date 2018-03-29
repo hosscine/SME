@@ -9,8 +9,8 @@
 #' @docType class
 #' @format An \code{R6Class} generator object.
 #'
-panelsom <- R6Class(
-  classname = "panelsom",
+planesom <- R6Class(
+  classname = "planesom",
   inherit = tpsom,
 
   public = list(

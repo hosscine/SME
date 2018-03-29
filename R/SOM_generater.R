@@ -64,12 +64,16 @@ setSom <- function(dim, topo.mode, weights = NULL,
 setGraph <- function(som,dim=NULL) tpgrp$new(som$adjacency,dim)
 
 
-#' Creates panel formed SOM.
+#' Creates plane formed SOM.
 #'
 #' @param dim dimension of input vector.
-#' @param r row of panel topology.
-#' @param c column of panel topology.
+#' @param r row of plane topology.
+#' @param c column of plane topology.
+#' @param ... SOM generater's parameters such as weights = NULL, alpha = 0.1, sigma = 1, neighbor = 1, collect.stats = F.
 #'
 #' @export
 #'
-setPanelSom <- function(dim,r,c) panelsom$new(dim,r,c)
+setPlaneSom <- function(dim, r, c, ...){
+  elp <- overwriteEllipsis(..., dim = dim, r = r, c = c)
+  return(do.call(planesom$new, elp))
+}
