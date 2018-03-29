@@ -71,9 +71,25 @@ setGraph <- function(som,dim=NULL) tpgrp$new(som$adjacency,dim)
 #' @param c column of plane topology.
 #' @param ... SOM generater's parameters such as weights = NULL, alpha = 0.1, sigma = 1, neighbor = 1, collect.stats = F.
 #'
+#' @return plane SOM object.
 #' @export
 #'
 setPlaneSom <- function(dim, r, c, ...){
   elp <- overwriteEllipsis(..., dim = dim, r = r, c = c)
   return(do.call(planesom$new, elp))
+}
+
+#' Title
+#'
+#' @param dim dimension of input vector.
+#' @param r row of torusian plane.
+#' @param c column of torusian plane.
+#' @param ... SOM generater's parameters such as weights = NULL, alpha = 0.1, sigma = 1, neighbor = 1, collect.stats = F.
+#'
+#' @return torus SOM object.
+#' @export
+#'
+setTorusSom <- function(dim, r, c, ...){
+  elp <- overwriteEllipsis(..., dim = dim, r = r, c = c)
+  return(do.call(torussom$new, elp))
 }
