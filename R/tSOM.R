@@ -67,10 +67,10 @@ tpsom <-
       },
 
       plot = function(X, ..., as.grp = F,
-                      dim = min(sapply(1:self$nnodes,function(n)length(self$calcNeighbor(n))))-1){
+                      dim = min(sapply(1:self$nnodes, function(n) length(self$calcNeighbor(n))), 4) - 1){
         if(missing(X) || as.grp){
           super$plot(..., as.grp = T, dim = dim)
-          cat("plot by graph mode.\nif you want to plot by data mode, add argment X and set as.grp = F.")
+          cat("plot by graph mode.\nif you want to plot by data mode, add argment X and set as.grp = F.\n")
         }
         else {
           if(self$dim == 2){

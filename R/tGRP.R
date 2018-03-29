@@ -43,7 +43,7 @@ tpgrp <-
       embedGraph = function(dim){
         # sets dimension
         if(is.null(dim)){
-          self$dim <- min(sapply(1:self$nnodes,function(n)length(self$calcNeighbor(n))))-1
+          self$dim <- min(sapply(1:self$nnodes, function(n)length(self$calcNeighbor(n))), 4) - 1
           message(paste("embedding dimension is automatically setted as",self$dim))
         }
         else self$dim <- dim
