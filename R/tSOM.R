@@ -68,21 +68,24 @@ tpsom <-
 
       plot = function(X, ..., as.grp = F,
                       dim = min(sapply(1:self$nnodes, function(n) length(self$calcNeighbor(n))), 4) - 1){
+
         if(missing(X) || as.grp){
-          super$plot(..., as.grp = T, dim = dim)
-          cat("plot by graph mode.\nif you want to plot by data mode, add argment X and set as.grp = F.\n")
+          super$plot(..., dim = dim, reemb = T)
+          message("plot by graph mode\nif you want to plot by data mode, add argment X and set as.grp = F\n")
         }
         else {
           if(self$dim == 2){
             elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = 1)
             do.call(plot,elp)
             points(self$weights, ...)
+            private$drawNodeEdges(dim = self$dim, reemb = T)
           }
           else if(self$dim == 3){
             elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
                                      x = X, col = 1, size = 5)
             do.call(plot3d,elp)
             points3d(self$weights, ...)
+            private$drawNodeEdges(dim = self$dim, reemb = T)
           }
           else{
             pca <- prcomp(rbind(X, self$weights))[[5]]
@@ -102,6 +105,7 @@ tpsom <-
             rgl::text3d(pca[(nrow(X) + 1):nrow(pca),], texts = 1:self$nnodes, adj = 1)
           }
         }
+
       },
 
       calcDistortion = function(x, win)
