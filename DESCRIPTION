@@ -2,9 +2,9 @@ Package: SME
 Title: Self-Manifolding Embedding
 Version: 1.2.3.9000
 Authors@R: person("Rentaro", "Futagami", email = "futagamirentaro@gmail.com", role = c("aut", "cre"))
-Description: Including a self-organizing maps for non isometric data,
-    and SME that is one of the dimensionality reduction methods,
-    which uses manifolds information created by SOM.
+Description: This package includes the self-organizing maps for various non isometric data,
+    and Self-manifolding embedding(SME) that is one of the dimensionality reduction methods,
+    which uses manifolds information composed by SOM.
 Depends: R (>= 3.4.3)
 License: GPL-3
 Encoding: UTF-8
