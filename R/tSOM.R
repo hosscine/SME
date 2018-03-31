@@ -66,7 +66,7 @@ tpsom <-
           )))
       },
 
-      plot = function(X, ..., as.grp = F,
+      plot = function(X, ..., as.grp = F, som.only = F,
                       dim = min(sapply(1:self$nnodes, function(n) length(self$calcNeighbor(n))), 4) - 1){
 
         if(missing(X) || as.grp){
@@ -75,29 +75,50 @@ tpsom <-
         }
         else {
           if(self$dim == 2){
-            elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = 1)
+            if(!som.only){
+            elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X,
+                                     col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
             do.call(plot,elp)
             points(self$weights, ...)
+            }
+            else{
+              elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = self$weights, size = 3, col = 1)
+              do.call(plot, elp)
+            }
+
             private$drawNodeEdges(dim = self$dim)
           }
           else if(self$dim == 3){
-            elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
-                                     x = X, col = 1, size = 5)
+            if(!som.only){
+            elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = X, size = 5,
+                                     col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
             do.call(plot3d,elp)
             points3d(self$weights, ...)
+            }
+            else{
+              elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = self$weights, size = 3, col = 1)
+              do.call(plot3d, elp)
+            }
             private$drawNodeEdges(dim = self$dim)
           }
           else{
             pca <- prcomp(rbind(X, self$weights))[[5]]
 
             # plot X
-            elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
-                                     x = pca[1:nrow(X),], size = 5,
-                                     col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
-            do.call(plot3d, elp)
+            if(!som.only){
+              elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "", x = pca[1:nrow(X),], size = 5,
+                                       col = rainbow(self$nnodes)[apply(X, 1, self$calcWinner)])
+              do.call(plot3d, elp)
+              # plot nodes
+              rgl::points3d(pca[(nrow(X)+1):nrow(pca),], size = 3)
+            }
+            else {
+              elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
+                                       x = pca[(nrow(X)+1):nrow(pca),], size = 3, col = 1)
+              do.call(plot3d, elp)
+            }
 
-            # plot SOM
-            rgl::points3d(pca[(nrow(X)+1):nrow(pca),], size = 3)
+            # plot edges
             for(i in 1:self$nnodes){
               nei <- self$calcNeighbor(i, neighbor.hop = 1)
               rgl::segments3d(x = pca[replace(rep(i, 2 * length(nei)), 2 * 1:length(nei), nei) + nrow(X),])
