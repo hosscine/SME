@@ -78,14 +78,14 @@ tpsom <-
             elp <- overwriteEllipsis(..., xlab = "", ylab = "", x = X, col = 1)
             do.call(plot,elp)
             points(self$weights, ...)
-            private$drawNodeEdges(dim = self$dim, reemb = T)
+            private$drawNodeEdges(dim = self$dim)
           }
           else if(self$dim == 3){
             elp <- overwriteEllipsis(..., xlab = "", ylab = "", zlab = "",
                                      x = X, col = 1, size = 5)
             do.call(plot3d,elp)
             points3d(self$weights, ...)
-            private$drawNodeEdges(dim = self$dim, reemb = T)
+            private$drawNodeEdges(dim = self$dim)
           }
           else{
             pca <- prcomp(rbind(X, self$weights))[[5]]
