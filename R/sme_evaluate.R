@@ -9,8 +9,7 @@
 #' @param return.embs if\code{T}, returns embedding results with listed.
 #'
 #' @importFrom scatterplot3d scatterplot3d
-#' @importFrom graphics par
-#' @importFrom graphics plot
+#' @importFrom graphics par plot
 #' @importFrom stats cmdscale dist
 #' @importFrom utils capture.output
 #'
