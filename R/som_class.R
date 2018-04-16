@@ -141,7 +141,7 @@ tpsom <-
         return(winner)
       },
 
-      batchStep = function(X,t=1000)
-        hoge <- apply(X[round(runif(t)*nrow(X)),],1,function(x)self$step(x))
+      batchStep = function(X, t = 1000)
+        hoge <- apply(X[myfs::runifN(n = t, max = nrow(X)),], 1, self$step)
     )
   )
